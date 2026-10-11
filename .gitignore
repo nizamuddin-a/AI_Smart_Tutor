@@ -1,38 +1,22 @@
-﻿.env
-.env.*
-!.env.example
-backend/.env
-backend/.env.*
-
-.venv/
-venv/
-__pycache__/
-*.py[cod]
-
-data/*.db
-data/uploads/
-
-.vscode/
-
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Environment variables
+﻿
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
 !backend/.env.example
+backend/.env
+backend/.env.*
 
-# Virtual environment
+# Python virtual environments and cache
 .venv/
 venv/
+__pycache__/
+*.py[cod]
 
-# Local database and uploaded files
+# Local database and uploaded documents
 data/*.db
 data/uploads/*
 !data/uploads/.gitkeep
 
 # Editor settings
 .vscode/
-!backend/.env.example
