@@ -13,3 +13,26 @@ data/*.db
 data/uploads/
 
 .vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!backend/.env.example
+
+# Virtual environment
+.venv/
+venv/
+
+# Local database and uploaded files
+data/*.db
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Editor settings
+.vscode/
+!backend/.env.example
