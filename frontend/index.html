@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6558e8"><meta name="description" content="A colorful, AI-powered study workspace for documents, focus sessions, quizzes and flashcards.">
+  <title>StudySpace AI — Your learning workspace</title><link rel="stylesheet" href="/style.css">
+  <style>
+    /* Split-view additions only (style.css is unchanged) */
+    .viewer-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0 16px; }
+    .viewer-controls button.active { outline: 2px solid var(--cyan); outline-offset: 3px; }
+    .viewer-grid { display: grid; grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr)); gap: 14px; }
+    .viewer-pane { min-width: 0; padding: 10px; border: 1px solid var(--border); border-radius: 15px; background: rgb(8 13 27 / 35%); transition: border-color 200ms ease; }
+    .viewer-pane.active { border-color: var(--cyan); }
+    .viewer-pane select { margin: 0 0 10px; }
+    .pane-frame { display: block; width: 100%; height: 570px; border: 1px solid var(--border); border-radius: 13px; background: #fff; }
+    .viewer-pane .empty-state { min-height: 300px; }
+    @media (max-width: 900px) { .viewer-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .pane-frame { height: 420px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true">✦</div><div><h1>StudySpace <span>AI</span></h1><p>Your personal space to learn, focus and grow.</p></div></div><span id="connection" class="status" role="status">Connecting…</span></header>
+  <main class="layout">
+    <aside class="sidebar panel">
+      <h2>📚 My documents</h2><p class="muted">Add your study material and choose which files your tutor can use.</p>
+      <label class="upload-button" for="fileInput">＋ Upload documents</label><input id="fileInput" type="file" accept=".pdf,.pptx,.docx,.txt,.md" multiple>
+      <p class="muted">PDF, PowerPoint, Word, TXT or Markdown</p><div id="uploadStatus" class="notice" role="status"></div><div id="documentList" class="document-list muted">Loading documents…</div>
+      <button id="refreshDocs" class="secondary full-width">↻ Refresh documents</button>
+      <hr><h2>⏱ Focus timer</h2><p class="muted">Small steps add up. Focus on one thing at a time.</p><div id="timerDisplay" class="timer">25:00</div>
+      <div class="timer-controls"><button id="startTimer">▶ Start</button><button id="pauseTimer" class="secondary">Ⅱ Pause</button><button id="resetTimer" class="secondary">↻ Reset</button></div>
+      <label for="focusMinutes">Session length (minutes)</label><input id="focusMinutes" type="number" min="1" max="180" value="25"><p id="timerStatus" class="muted" role="status">Ready when you are.</p>
+    </aside>
+    <section class="workspace">
+      <section class="panel document-panel"><div class="section-heading"><div><h2>🗂 Document viewer</h2><p class="muted">Open up to 3 documents side by side. Click a pane to make it active, then press <strong>Open</strong> on a document, or pick one from the pane's dropdown.</p></div><span id="selectedDocName" class="muted">No document selected</span></div>
+        <div class="viewer-controls" role="group" aria-label="Viewer layout">
+          <button type="button" class="secondary active" data-layout="1">▭ Single view</button>
+          <button type="button" class="secondary" data-layout="2">◫ Split 2</button>
+          <button type="button" class="secondary" data-layout="3">▥ Split 3</button>
+        </div>
+        <div id="viewerGrid" class="viewer-grid"></div>
+      </section>
+      <section class="panel tutor-panel"><h2>✨ AI tutor</h2><p class="muted">Get clear explanations grounded in your uploaded study material.</p>
+        <label for="provider">AI provider</label><select id="provider"><option value="gemini">Google Gemini</option><option value="groq">Groq</option></select>
+        <label for="question">What would you like to understand?</label><textarea id="question" rows="4" placeholder="For example: Explain this topic in simple words…"></textarea><div class="action-row"><button id="askButton">✦ Ask AI tutor</button><button id="clearChat" class="secondary">Clear answer</button></div><div id="answer" class="answer" aria-live="polite"></div><div id="citations" class="citations"></div>
+      </section>
+      <section class="panel quiz-panel"><h2>🎯 Practice quiz</h2><p class="muted">Turn your notes into a quick knowledge check.</p><div class="action-row"><label for="quizCount">Questions</label><select id="quizCount"><option value="3">3</option><option value="5" selected>5</option><option value="10">10</option></select><button id="generateQuiz">Generate quiz ↗</button></div><div id="quizArea"></div></section>
+      <section class="panel flashcard-panel"><h2>🪄 Flashcards</h2><p class="muted">Create quick cards to review important concepts.</p><label for="flashcardFront">Front — question or concept</label><input id="flashcardFront" placeholder="What is a semiconductor?"><label for="flashcardBack">Back — answer</label><textarea id="flashcardBack" rows="2" placeholder="Write a short explanation…"></textarea><div class="action-row"><button id="saveFlashcard">＋ Save flashcard</button><button id="showFlashcard" class="secondary">Show latest answer</button></div><div id="flashcardDeck" class="flashcard-deck"></div></section>
+      <section class="panel history-panel"><h2>📈 Study history</h2><p class="muted">A little progress every day goes a long way.</p><button id="refreshHistory" class="secondary">↻ Refresh history</button><ul id="historyList"><li>Your recent study activity will appear here.</li></ul></section>
+    </section>
+  </main><footer>Made for curious minds · <strong>StudySpace AI</strong></footer><script src="/app.js" defer></script>
+</body>
+</html>
+    <script src="/app.js" defer></script>
